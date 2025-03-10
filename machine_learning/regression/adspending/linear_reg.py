@@ -5,7 +5,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 
 # Load the dataset (update the file path to where you saved Advertising.csv)
-data = pd.read_csv('advertising.xls')
+data = pd.read_csv('advertising.xls') #https://www.kaggle.com/datasets/ashydv/advertising-dataset?resource=download
 
 # Drop the index column if it exists
 data = data.drop(columns=['Unnamed: 0'], errors='ignore')
