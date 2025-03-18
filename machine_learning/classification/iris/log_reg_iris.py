@@ -34,7 +34,7 @@ X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
 # Create and train the logistic regression model
-model = LogisticRegression(multi_class='multinomial', max_iter=1000)
+model = LogisticRegression(multi_class='auto', max_iter=1000) # multi_class='auto' selects the best option
 model.fit(X_train_scaled, y_train)
 
 # Make predictions
@@ -49,7 +49,9 @@ cm = confusion_matrix(y_test, y_pred)
 
 # Create confusion matrix visualization
 plt.figure(figsize=(10, 8))
-sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
+ax = plt.axes()
+ax.set_facecolor('none')
+sns.heatmap(cm, annot=True, fmt='d', cmap='Grays',
             xticklabels=iris.target_names,
             yticklabels=iris.target_names)
 plt.title('Confusion Matrix')
