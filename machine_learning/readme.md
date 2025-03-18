@@ -73,4 +73,20 @@ You can also run these machine learning demos in [Google Colab](https://colab.re
    ```
 4. Open and run the `.ipynb` notebooks in Colab.
 
+## Algorithm Capabilities
+
+The table below indicates whether an algorithm can be used for classification or regression:
+
+| Algorithm            | Classification | Regression |
+|----------------------|---------------|-----------|
+| Linear Regression    | ❌            | ✅        |
+| Logistic Regression  | ✅            | ❌        |
+| SVMs                | ✅            | ✅        |
+| SGD                 | ✅            | ✅        |
+| Decision Tree       | ✅            | ✅        |
+| Bagging Trees       | ✅            | ✅        |
+| Random Forest       | ✅            | ✅        |
+| Gradient Boosting   | ✅            | ✅        |
+
 Enjoy experimenting with machine learning algorithms!
+
