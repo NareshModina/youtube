@@ -63,9 +63,9 @@ test_r2 = r2_score(y_test, test_pred)
 
 # Visualize results
 plt.style.use('dark_background')
-plt.figure(figsize=(15, 8))
 
-# Plot actual vs predicted
+# First Plot: Actual vs Predicted Prices
+plt.figure(figsize=(15, 8))
 plt.plot(y_train.index, y_train, label='Actual Price (Train)', color='cyan', alpha=0.5)
 plt.plot(y_test.index, y_test, label='Actual Price (Test)', color='yellow', alpha=0.5)
 plt.plot(y_train.index, train_pred, label='Predicted Price (Train)', color='blue', linestyle='--')
@@ -80,6 +80,27 @@ plt.xticks(rotation=45)
 
 # Add train/test split line
 split_date = y_test.index[0]
+plt.axvline(x=split_date, color='white', linestyle=':', alpha=0.5)
+
+plt.tight_layout()
+
+# Second Plot: Residuals (Actual - Predicted)
+plt.figure(figsize=(15, 6))
+train_residuals = y_train - train_pred
+test_residuals = y_test - test_pred
+
+plt.plot(y_train.index, train_residuals, label='Train Residuals', color='blue', alpha=0.7)
+plt.plot(y_test.index, test_residuals, label='Test Residuals', color='red', alpha=0.7)
+plt.axhline(y=0, color='white', linestyle='--', alpha=0.5)  # Zero line for reference
+
+plt.title(f'{ticker} Stock Price Prediction Residuals\n(Actual - Predicted)')
+plt.xlabel('Date')
+plt.ylabel('Residual ($)')
+plt.grid(True, alpha=0.2)
+plt.legend(loc='upper left')
+plt.xticks(rotation=45)
+
+# Add train/test split line
 plt.axvline(x=split_date, color='white', linestyle=':', alpha=0.5)
 
 plt.tight_layout()

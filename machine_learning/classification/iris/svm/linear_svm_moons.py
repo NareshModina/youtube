@@ -1,20 +1,18 @@
 # Import necessary libraries
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn import datasets
+from sklearn.datasets import make_moons
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.svm import SVC  # SVC with linear kernel
+from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score, classification_report
 import seaborn as sns
 
-# Step 1: Load the Iris dataset
-iris = datasets.load_iris()
-X = iris.data[:, [2, 3]]  # Use petal length and petal width for 2D visualization
-y = iris.target  # Target labels (0: Setosa, 1: Versicolor, 2: Virginica)
+# Step 1: Load the Moons dataset
+X, y = make_moons(n_samples=200, noise=0.2, random_state=42)  # 200 samples, some noise for realism
 
-print("Dataset loaded! Features:", iris.feature_names[2:4])
-print("Classes:", iris.target_names)
+print("Moons dataset loaded! Features: ['X1', 'X2']")
+print("Classes: ['Moon 0', 'Moon 1']")
 
 # Step 2: Split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
@@ -35,7 +33,7 @@ print("Linear SVM model trained!")
 y_pred = svm_clf.predict(X_test_scaled)
 accuracy = accuracy_score(y_test, y_pred)
 print(f"Accuracy: {accuracy:.2f}")
-print("Classification Report:\n", classification_report(y_test, y_pred, target_names=iris.target_names))
+print("Classification Report:\n", classification_report(y_test, y_pred, target_names=['Moon 0', 'Moon 1']))
 
 # Step 6: Visualize and save the decision boundary
 def plot_decision_boundary(X, y, model, title, filename):
@@ -46,42 +44,43 @@ def plot_decision_boundary(X, y, model, title, filename):
     
     Z = model.predict(np.c_[xx.ravel(), yy.ravel()])
     Z = Z.reshape(xx.shape)
-    plt.figure(facecolor='black')
+    
+    plt.figure(facecolor='black')  # Black figure background
     ax = plt.gca()
-    # ax.set_facecolor('black')  # Set axes background to black
+    # ax.set_facecolor('black')  # Black axes background
     for spine in ax.spines.values():
         spine.set_color('white')
     ax.tick_params(axis='both', colors='white')
     plt.contourf(xx, yy, Z, cmap=plt.cm.coolwarm, alpha=0.3)
     plt.scatter(X[:, 0], X[:, 1], c=y, cmap=plt.cm.coolwarm, edgecolors='k')
-    plt.xlabel('Petal Length (standardized)', color='white')
-    plt.ylabel('Petal Width (standardized)', color='white')
+    plt.xlabel('Feature X1 (standardized)', color='white')
+    plt.ylabel('Feature X2 (standardized)', color='white')
     plt.title(title, color='white')
     plt.savefig(filename, dpi=300, facecolor='black')  # Save figure with high quality
     plt.show()
 
 # Plot and save decision boundary for training data
 plot_decision_boundary(X_train_scaled, y_train, svm_clf, 
-                       "Linear SVM Decision Boundary (Training Data)", 
-                       "svm_train_boundary.png")
+                       "Linear SVM Decision Boundary (Training Data) - Moons", 
+                       "svm_linear_moons_train_boundary.png")
 
 # Plot and save decision boundary for test data
 plot_decision_boundary(X_test_scaled, y_test, svm_clf, 
-                       "Linear SVM Decision Boundary (Test Data)", 
-                       "svm_test_boundary.png")
+                       "Linear SVM Decision Boundary (Test Data) - Moons", 
+                       "svm_linear_moons_test_boundary.png")
 
 # Step 7: Bonus - Confusion Matrix
 from sklearn.metrics import confusion_matrix
 cm = confusion_matrix(y_test, y_pred)
-plt.figure(figsize=(6, 4), facecolor='black')
+plt.figure(figsize=(6, 4), facecolor='black')  # Black figure background
 ax = plt.gca()
-ax.set_facecolor('black')  # Set axes background to black
+ax.set_facecolor('black')  # Black axes background
 for spine in ax.spines.values():
     spine.set_color('white')
 ax.tick_params(axis='both', colors='white')
-sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=iris.target_names, yticklabels=iris.target_names)
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=['Moon 0', 'Moon 1'], yticklabels=['Moon 0', 'Moon 1'])
 plt.xlabel('Predicted', color='white')
 plt.ylabel('True', color='white')
-plt.title('Confusion Matrix', color='white')
-plt.savefig('confusion_matrix_linear.png', dpi=300, facecolor='black')  # Save confusion matrix
+plt.title('Confusion Matrix - Moons (Linear SVM)', color='white')
+plt.savefig('confusion_matrix_moons_linear.png', dpi=300, facecolor='black')  # Save confusion matrix
 plt.show()

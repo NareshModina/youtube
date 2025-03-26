@@ -37,8 +37,8 @@ accuracy = accuracy_score(y_test, y_pred)
 print(f"Accuracy: {accuracy:.2f}")
 print("Classification Report:\n", classification_report(y_test, y_pred, target_names=iris.target_names))
 
-# Step 6: Visualize the decision boundary
-def plot_decision_boundary(X, y, model, title):
+# Step 6: Visualize and save the decision boundary
+def plot_decision_boundary(X, y, model, title, filename):
     h = 0.02  # Step size in the mesh
     x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
     y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
@@ -47,25 +47,42 @@ def plot_decision_boundary(X, y, model, title):
     Z = model.predict(np.c_[xx.ravel(), yy.ravel()])
     Z = Z.reshape(xx.shape)
     
+    plt.figure(facecolor='black')  # Black figure background
+    ax = plt.gca()
+    # ax.set_facecolor('black')  # Black axes background
+    for spine in ax.spines.values():
+        spine.set_color('white')
+    ax.tick_params(axis='both', colors='white')
     plt.contourf(xx, yy, Z, cmap=plt.cm.coolwarm, alpha=0.3)
     plt.scatter(X[:, 0], X[:, 1], c=y, cmap=plt.cm.coolwarm, edgecolors='k')
-    plt.xlabel('Petal Length (standardized)')
-    plt.ylabel('Petal Width (standardized)')
-    plt.title(title)
+    plt.xlabel('Petal Length (standardized)', color='white')
+    plt.ylabel('Petal Width (standardized)', color='white')
+    plt.title(title, color='white')
+    plt.savefig(filename, dpi=300, facecolor='black')  # Save figure with high quality
     plt.show()
 
-# Plot decision boundary for training data
-plot_decision_boundary(X_train_scaled, y_train, svm_clf, "SVM Decision Boundary (Training Data)")
+# Plot and save decision boundary for training data
+plot_decision_boundary(X_train_scaled, y_train, svm_clf, 
+                       "SVM Decision Boundary (Training Data)", 
+                       "svm_rbf_train_boundary.png")
 
-# Plot decision boundary for test data
-plot_decision_boundary(X_test_scaled, y_test, svm_clf, "SVM Decision Boundary (Test Data)")
+# Plot and save decision boundary for test data
+plot_decision_boundary(X_test_scaled, y_test, svm_clf, 
+                       "SVM Decision Boundary (Test Data)", 
+                       "svm_rbf_test_boundary.png")
 
 # Step 7: Bonus - Confusion Matrix
 from sklearn.metrics import confusion_matrix
 cm = confusion_matrix(y_test, y_pred)
-plt.figure(figsize=(6, 4))
+plt.figure(figsize=(6, 4), facecolor='black')  # Black figure background
+ax = plt.gca()
+ax.set_facecolor('black')  # Black axes background
+for spine in ax.spines.values():
+    spine.set_color('white')
+ax.tick_params(axis='both', colors='white')
 sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=iris.target_names, yticklabels=iris.target_names)
-plt.xlabel('Predicted')
-plt.ylabel('True')
-plt.title('Confusion Matrix')
+plt.xlabel('Predicted', color='white')
+plt.ylabel('True', color='white')
+plt.title('Confusion Matrix', color='white')
+plt.savefig('confusion_matrix_rbf.png', dpi=300, facecolor='black')  # Save confusion matrix
 plt.show()

@@ -30,10 +30,11 @@ for kernel_name, title, model in configs:
     # Create figure with black background
     plt.figure(facecolor='black')
     ax = plt.gca()
+    ax.set_facecolor('black')
     
     # Set axis spines, ticks, and labels to white
     for spine in ax.spines.values():
-        spine.set_color('red')
+        spine.set_color('white')
     ax.tick_params(axis='both', colors='white')
     
     # Plot decision boundary (0-level) and margins (+1 and -1 levels) with enhanced visibility
@@ -42,7 +43,7 @@ for kernel_name, title, model in configs:
     plt.contour(xx, yy, Z, levels=[1], colors=['blue'], linestyles=['--'], linewidths=2, alpha=0.9)   # Margin +1
     
     # Plot data points
-    plt.scatter(X[:, 0], X[:, 1], c=y, cmap='viridis', edgecolors='k')
+    plt.scatter(X[:, 0], X[:, 1], c=y, cmap='Wistia', edgecolors='k')
     
     # Highlight support vectors
     plt.scatter(model.support_vectors_[:, 0], model.support_vectors_[:, 1], 
