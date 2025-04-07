@@ -11,16 +11,19 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Load the MNIST digits dataset
+print("Loading MNIST dataset...")
 digits = load_digits()
+print("Dataset loaded!")
 
 # Create a pandas DataFrame with features
 df = pd.DataFrame(digits.data, columns=[f'pixel_{i}' for i in range(digits.data.shape[1])])
+# print(df.info())
 
-# Print feature info
-print("Features in the dataset:")
-print(df.columns.tolist())
-print("\nFirst few rows of the dataset:")
-print(df.head())
+# # Print feature info/(optional)
+# print("Features in the dataset:")
+# print(df.columns.tolist())
+# print("\nFirst few rows of the dataset:")
+# print(df.head())
 
 # Use all features
 X = df
@@ -49,6 +52,7 @@ model = GradientBoostingClassifier(
     n_estimators=100,  # Number of trees
     random_state=42
 )
+print("\nTraining Gradient Boosting Classifier...")
 model.fit(X_train_scaled, y_train)
 
 # Make predictions

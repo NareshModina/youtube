@@ -16,11 +16,11 @@ digits = load_digits()
 # Create a pandas DataFrame with features
 df = pd.DataFrame(digits.data, columns=[f'pixel_{i}' for i in range(digits.data.shape[1])])
 
-# Print feature info
-print("Features in the dataset:")
-print(df.columns.tolist())
-print("\nFirst few rows of the dataset:")
-print(df.head())
+# # Print feature info(optional)
+# print("Features in the dataset:")
+# print(df.columns.tolist())
+# print("\nFirst few rows of the dataset:")
+# print(df.head())
 
 # Use all features
 X = df

@@ -114,9 +114,9 @@ def plot_misclassified_examples(X_test, y_test, y_pred, num_examples=10):
 print("\nMisclassified Examples:")
 plot_misclassified_examples(X_test, y_test, y_pred)
 
-# Calculate per-class metrics
-print("\nPer-digit accuracy:")
-for digit in sorted(set(y_test)):
-    mask = y_test == digit
-    digit_accuracy = accuracy_score(y_test[mask], y_pred[mask])
-    print(f"Digit {digit}: {digit_accuracy:.4f}")
+# Calculate per-class metrics(optional)
+# print("\nPer-digit accuracy:")
+# for digit in sorted(set(y_test)):
+#     mask = y_test == digit
+#     digit_accuracy = accuracy_score(y_test[mask], y_pred[mask])
+#     print(f"Digit {digit}: {digit_accuracy:.4f}")

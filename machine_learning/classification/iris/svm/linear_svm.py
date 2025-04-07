@@ -7,6 +7,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC  # SVC with linear kernel
 from sklearn.metrics import accuracy_score, classification_report
 import seaborn as sns
+from sklearn.metrics import confusion_matrix
 
 # Step 1: Load the Iris dataset
 iris = datasets.load_iris()
@@ -57,7 +58,7 @@ def plot_decision_boundary(X, y, model, title, filename):
     plt.xlabel('Petal Length (standardized)', color='white')
     plt.ylabel('Petal Width (standardized)', color='white')
     plt.title(title, color='white')
-    plt.savefig(filename, dpi=300, facecolor='black')  # Save figure with high quality
+    plt.savefig(filename, dpi=300, facecolor='none')  # Save figure with high quality
     plt.show()
 
 # Plot and save decision boundary for training data
@@ -71,11 +72,10 @@ plot_decision_boundary(X_test_scaled, y_test, svm_clf,
                        "svm_test_boundary.png")
 
 # Step 7: Bonus - Confusion Matrix
-from sklearn.metrics import confusion_matrix
 cm = confusion_matrix(y_test, y_pred)
-plt.figure(figsize=(6, 4), facecolor='black')
+plt.figure(figsize=(6, 4), facecolor='none')
 ax = plt.gca()
-ax.set_facecolor('black')  # Set axes background to black
+ax.set_facecolor('none')  
 for spine in ax.spines.values():
     spine.set_color('white')
 ax.tick_params(axis='both', colors='white')
@@ -83,5 +83,5 @@ sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=iris.target_names
 plt.xlabel('Predicted', color='white')
 plt.ylabel('True', color='white')
 plt.title('Confusion Matrix', color='white')
-plt.savefig('confusion_matrix_linear.png', dpi=300, facecolor='black')  # Save confusion matrix
+plt.savefig('confusion_matrix_linear.png', dpi=300, facecolor='none')  # Save confusion matrix
 plt.show()
